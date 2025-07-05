@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>UV Checker</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <h1>Should You Wear Sunscreen Today?</h1>
+
+  <form action="/check" method="POST">
+    <label>Latitude: <input type="text" name="lat" required></label><br>
+    <label>Longitude: <input type="text" name="lng" required></label><br>
+    <button type="submit">Check UV Index</button>
+  </form>
+
+  <% if (uv) { %>
+    <h2>UV Index: <%= uv %></h2>
+    <p><%= advice %></p>
+  <% } %>
+
+  <% if (error) { %>
+    <p class="error"><%= error %></p>
+  <% } %>
+</body>
+</html>
