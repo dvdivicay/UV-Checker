@@ -2,7 +2,9 @@ import express from 'express';
 import axios  from 'axios';
 import path from 'path';
 import { fileURLToPath } from 'url';
+import dotenv from 'dotenv';
 
+dotenv.config();
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 const app = express();
@@ -26,13 +28,22 @@ app.post('/check', async (req, res) => {
     });
 
     const uv = response.data.result.uv;
+    const advice = uv >= 3 ? 'Yes, wear sunscreen today!' : 'You’re good! No need for sunscreen.';
+
+    console.log('UV:', uv);
+    console.log('Advice:', advice);
     res.render('index', {
       uv,
-      error: null,
-      advice: uv >= 3 ? 'Yes, wear sunscreen today!' : 'You’re good! No need for sunscreen.'
+      advice,
+      error: null
     });
   } catch (error) {
-    res.render('index', { uv: null, error: 'Unable to retrieve UV data. Try again later.' });
+    console.error(error.response?.data || error.message);
+    res.render('index', {
+      uv: null,
+      advice: null,
+      error: 'Unable to retrieve UV data. Try again later.'
+    });
   }
 });
 

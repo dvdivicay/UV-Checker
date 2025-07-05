@@ -2,24 +2,35 @@
 <html>
 <head>
   <title>UV Checker</title>
-  <link rel="stylesheet" href="/style.css">
+  <link rel="stylesheet" href="/styles.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=Outfit:wght@100..900&family=Roboto:ital,wght@0,900;1,900&display=swap" rel="stylesheet">
 </head>
 <body>
+  <img src="bg.jpg" alt="Background" class="background-image">
+  <div class="header-container">
   <h1>Should You Wear Sunscreen Today?</h1>
+  </div>
+  <div class="input-container">
+    <div class="input-container-div">
+      <form action="/check" method="POST" class="form">
+        <label>Latitude: <input type="text" name="lat" required></label><br>
+        <label>Longitude: <input type="text" name="lng" required></label><br>
+        <button type="submit">Check UV Index</button>
+      </form>
+    </div>
+  </div>
 
-  <form action="/check" method="POST">
-    <label>Latitude: <input type="text" name="lat" required></label><br>
-    <label>Longitude: <input type="text" name="lng" required></label><br>
-    <button type="submit">Check UV Index</button>
-  </form>
-
-  <% if (uv) { %>
+  <% if (typeof uv !== 'undefined' && uv !== null) { %>
+  <div class="uv-result">
     <h2>UV Index: <%= uv %></h2>
     <p><%= advice %></p>
-  <% } %>
+  </div>
+<% } %>
 
-  <% if (error) { %>
-    <p class="error"><%= error %></p>
-  <% } %>
+<% if (typeof error !== 'undefined' && error) { %>
+  <p class="error"><%= error %></p>
+<% } %>
 </body>
 </html>
